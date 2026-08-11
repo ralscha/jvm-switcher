@@ -1,0 +1,42 @@
+version: 2
+
+project_name: jvm-switcher
+
+builds:
+  - id: jvm-switcher
+    main: .
+    binary: jvm-switcher
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X jvm-switcher/internal/build.version={{ .Version }}
+    mod_timestamp: '{{ .CommitTimestamp }}'
+
+archives:
+  - id: binaries
+    formats:
+      - tar.gz
+    name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+
+release:
+  prerelease: auto
+
+changelog:
+  sort: asc
