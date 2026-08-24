@@ -805,8 +805,7 @@ func main() {
 }
 
 func childExitCode(err error) (int, bool) {
-	var exitError *exec.ExitError
-	if errors.As(err, &exitError) {
+	if exitError, ok := errors.AsType[*exec.ExitError](err); ok {
 		return exitError.ExitCode(), true
 	}
 	return 0, false
