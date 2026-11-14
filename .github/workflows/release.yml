@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Check out tagged source
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -63,7 +63,7 @@ jobs:
           fi
 
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@v7.0.0
         with:
           go-version-file: go.mod
           cache: false
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Check out verified release commit
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -122,13 +122,13 @@ jobs:
           fi
 
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@v7.0.0
         with:
           go-version-file: go.mod
           cache: false
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v7
+        uses: goreleaser/goreleaser-action@v7.3.0
         with:
           distribution: goreleaser
           version: '~> v2'
@@ -137,11 +137,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attest released archives from checksums
-        uses: actions/attest@v4
+        uses: actions/attest@v4.2.2
         with:
           subject-checksums: dist/checksums.txt
 
       - name: Attest checksum manifest
-        uses: actions/attest@v4
+        uses: actions/attest@v4.2.2
         with:
           subject-path: dist/checksums.txt
